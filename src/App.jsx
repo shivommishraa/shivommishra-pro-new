@@ -68,7 +68,7 @@ function Brand() {
       </span>
       <span className="brand-copy">
         Shiv Om Mishra
-        <small>Technical Leader</small>
+        <small>Software Development &amp; Technology</small>
       </span>
     </Link>
   );
@@ -220,7 +220,7 @@ function HomePage() {
           <p className="eyebrow"><span className="status-dot" /> TECHNICAL LEADER · SINCE SEPTEMBER 2026</p>
           <p className="hello">Hello, I&apos;m <span aria-hidden="true">👋</span></p>
           <h1>Shiv Om <span className="gradient-text">Mishra</span></h1>
-          <h2 className="role-line">Technical Leader</h2>
+          <h2 className="role-line">Software Development &amp; Technology</h2>
           <p className="hero-description">
             I bring experience across web development, software engineering and
             technical leadership, with a focus on e-commerce and web applications.
@@ -257,7 +257,7 @@ function HomePage() {
           <p className="section-kicker">01 / A LITTLE ABOUT ME</p>
           <h2>Turning ideas into<br /><span className="gradient-text">digital reality.</span></h2>
           <p>
-            I&apos;m Shiv Om Mishra, a Technical Leader whose career has progressed
+            I&apos;m Shiv Om Mishra, a Software Development &amp; Technology professional whose career has progressed
             through web development, software engineering and senior software
             engineering. I focus on practical e-commerce and web application work.
           </p>
@@ -326,7 +326,8 @@ function AboutPage() {
           <p className="section-kicker">MY APPROACH</p>
           <h2>Building useful things,<br /><span className="gradient-text">one detail at a time.</span></h2>
           <p>
-            I&apos;m Shiv Om Mishra, and my career path began as a Trainee Web
+            I&apos;m Shiv Om Mishra, a Software Development &amp; Technology
+            professional. My career path began as a Trainee Web
             Developer, progressing through Web Developer, Software Engineer and
             Senior Software Engineer before my current Technical Leader role.
             My project work spans e-commerce, web platforms and mobile applications.
