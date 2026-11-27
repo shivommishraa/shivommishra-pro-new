@@ -2,7 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import {
   AnimatePresence,
   motion,
+  useInView,
+  useMotionValue,
   useReducedMotion,
+  useScroll,
+  useSpring,
+  useTransform,
 } from "framer-motion";
 import {
   Link,
@@ -45,18 +50,136 @@ const careerPath = [
   { label: "CURRENT ROLE · SEPTEMBER 2026–PRESENT", title: "Technical Leader" },
 ];
 
+const roles = [
+  "Software Development & Technology",
+  "Technical Leader",
+  "Magento & Laravel Developer",
+  "Building digital products",
+];
+
+const marqueeItems = [
+  "Magento 2",
+  "Laravel",
+  "Drupal",
+  "React.js",
+  "PHP",
+  "CodeIgniter",
+  "Flutter",
+  "Android",
+  "MySQL",
+  "AWS",
+  "Git",
+  "Python",
+];
+
+const stats = [
+  { value: portfolioProjects.length, suffix: "+", label: "Projects delivered", note: "E-commerce & web" },
+  { value: skills.length, suffix: "", label: "Technologies", note: "Tools I build with" },
+  { value: careerPath.length, suffix: "", label: "Career stages", note: "Trainee → Leader" },
+  { value: 3, suffix: "", label: "Qualifications", note: "IT & computer science" },
+];
+
+const spotlightSelector = [
+  "[data-spotlight]",
+  ".skill-card",
+  ".project-card",
+  ".showcase-card",
+  ".beyond-card",
+  ".education-card",
+  ".journey-group",
+  ".project-note",
+  ".glass-code",
+].join(", ");
+
 function Reveal({ children, className = "", delay = 0 }) {
   const reduceMotion = useReducedMotion();
   return (
     <motion.div
       className={className}
-      initial={reduceMotion ? false : { opacity: 0, y: 22 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={reduceMotion ? false : { opacity: 0, y: 26, scale: 0.99 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, amount: 0.15 }}
-      transition={{ duration: 0.65, delay, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
     </motion.div>
+  );
+}
+
+function ScrollProgress() {
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, { stiffness: 140, damping: 30, restDelta: 0.001 });
+  return <motion.div className="scroll-progress" style={{ scaleX }} aria-hidden="true" />;
+}
+
+function Counter({ to, suffix = "" }) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, amount: 0.6 });
+  const reduceMotion = useReducedMotion();
+  const [value, setValue] = useState(0);
+
+  useEffect(() => {
+    if (!inView) return undefined;
+    if (reduceMotion) {
+      setValue(to);
+      return undefined;
+    }
+    let frame;
+    const started = performance.now();
+    const tick = (now) => {
+      const progress = Math.min(1, (now - started) / 1500);
+      setValue(Math.round(to * (1 - Math.pow(1 - progress, 3))));
+      if (progress < 1) frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [inView, to, reduceMotion]);
+
+  return (
+    <span ref={ref} className="counter">
+      {value}
+      {suffix}
+    </span>
+  );
+}
+
+function RotatingRole() {
+  const reduceMotion = useReducedMotion();
+  const [index, setIndex] = useState(0);
+  const [text, setText] = useState(roles[0]);
+  const [phase, setPhase] = useState("hold");
+
+  useEffect(() => {
+    if (reduceMotion) {
+      setText(roles[0]);
+      return undefined;
+    }
+    let timeout;
+    if (phase === "hold") {
+      timeout = setTimeout(() => setPhase("deleting"), 2300);
+    } else if (phase === "deleting") {
+      if (text.length > 0) {
+        timeout = setTimeout(() => setText(text.slice(0, -1)), 26);
+      } else {
+        setIndex((current) => (current + 1) % roles.length);
+        setPhase("typing");
+      }
+    } else {
+      const next = roles[index];
+      if (text.length < next.length) {
+        timeout = setTimeout(() => setText(next.slice(0, text.length + 1)), 52);
+      } else {
+        setPhase("hold");
+      }
+    }
+    return () => clearTimeout(timeout);
+  }, [phase, text, index, reduceMotion]);
+
+  return (
+    <span className="typed-role" aria-hidden="true">
+      {text}
+      <span className="typing-caret" />
+    </span>
   );
 }
 
@@ -76,12 +199,20 @@ function Brand() {
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
 
   useEffect(() => setMenuOpen(false), [location.pathname]);
 
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 16);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
-    <header className="site-header">
+    <header className={`site-header${scrolled ? " is-scrolled" : ""}`}>
       <Brand />
       <button
         className="menu-toggle"
@@ -121,6 +252,14 @@ function Header() {
 
 function Footer() {
   const reduceMotion = useReducedMotion();
+  const [showBackTop, setShowBackTop] = useState(false);
+
+  useEffect(() => {
+    const updateVisibility = () => setShowBackTop(window.scrollY > 240);
+    updateVisibility();
+    window.addEventListener("scroll", updateVisibility, { passive: true });
+    return () => window.removeEventListener("scroll", updateVisibility);
+  }, []);
 
   return (
     <footer className="footer section-wrap">
@@ -128,25 +267,39 @@ function Footer() {
       <p>Designed &amp; built with curiosity. © {new Date().getFullYear()} Shiv Om Mishra.</p>
       <button
         type="button"
-        className="back-top"
+        className={`back-top${showBackTop ? " is-visible" : ""}`}
+        aria-label="Back to top"
         onClick={() => window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" })}
       >
-        Back to top ↑
+        <span className="back-top-label">Back to top</span>
+        <span className="back-top-icon" aria-hidden="true">↑</span>
       </button>
     </footer>
   );
 }
 
 function SectionHeading({ kicker, title, highlight, description }) {
+  const reduceMotion = useReducedMotion();
+  const motionProps = {
+    initial: reduceMotion ? false : { opacity: 0, y: 24 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true, amount: 0.4 },
+    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
+  };
+
   return (
     <div className="section-heading">
-      <div>
+      <motion.div {...motionProps}>
         <p className="section-kicker">{kicker}</p>
         <h2>
           {title} <span className="gradient-text">{highlight}</span>
         </h2>
-      </div>
-      {description && <p>{description}</p>}
+      </motion.div>
+      {description && (
+        <motion.p {...motionProps} transition={{ ...motionProps.transition, delay: 0.1 }}>
+          {description}
+        </motion.p>
+      )}
     </div>
   );
 }
@@ -205,22 +358,119 @@ const cardMotion = {
   show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
 };
 
+function HeroArt() {
+  const reduceMotion = useReducedMotion();
+  const rotateX = useMotionValue(0);
+  const rotateY = useMotionValue(0);
+  const smoothX = useSpring(rotateX, { stiffness: 140, damping: 18, mass: 0.35 });
+  const smoothY = useSpring(rotateY, { stiffness: 140, damping: 18, mass: 0.35 });
+  const { scrollY } = useScroll();
+  const parallaxY = useSpring(useTransform(scrollY, [0, 720], [0, 58]), {
+    stiffness: 70,
+    damping: 22,
+  });
+
+  function handlePointerMove(event) {
+    if (reduceMotion) return;
+    const rect = event.currentTarget.getBoundingClientRect();
+    const px = (event.clientX - rect.left) / rect.width - 0.5;
+    const py = (event.clientY - rect.top) / rect.height - 0.5;
+    rotateY.set(px * 16);
+    rotateX.set(-py * 14);
+  }
+
+  function resetTilt() {
+    rotateX.set(0);
+    rotateY.set(0);
+  }
+
+  return (
+    <div className="hero-art" onPointerMove={handlePointerMove} onPointerLeave={resetTilt}>
+      <span className="hero-halo" aria-hidden="true" />
+      <span className="orbit-ring orbit-ring-one" aria-hidden="true"><i /></span>
+      <span className="orbit-ring orbit-ring-two" aria-hidden="true"><i /></span>
+      <motion.div
+        className="profile-placeholder"
+        style={{
+          rotateX: smoothX,
+          rotateY: smoothY,
+          y: parallaxY,
+          transformPerspective: 1100,
+        }}
+      >
+        <img
+          className="hero-portrait"
+          src="/images/shiv-om-mishra-portrait.png"
+          alt="Portrait of Shiv Om Mishra"
+        />
+        <span className="portrait-sheen" aria-hidden="true" />
+      </motion.div>
+      <span className="hero-chip chip-a" aria-hidden="true">Magento</span>
+      <span className="hero-chip chip-b" aria-hidden="true">React</span>
+      <span className="hero-chip chip-c" aria-hidden="true">Laravel</span>
+    </div>
+  );
+}
+
+function Marquee() {
+  return (
+    <div className="marquee" aria-hidden="true">
+      <div className="marquee-track">
+        {[0, 1].map((copy) => (
+          <div className="marquee-group" key={copy}>
+            {marqueeItems.map((item) => (
+              <span key={`${copy}-${item}`}>
+                {item}
+                <i>✦</i>
+              </span>
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function StatsStrip() {
+  return (
+    <section className="section-wrap stats-wrap" aria-label="Portfolio highlights">
+      <Reveal className="stats-strip">
+        {stats.map((stat) => (
+          <div className="stat" key={stat.label}>
+            <strong><Counter to={stat.value} suffix={stat.suffix} /></strong>
+            <span>{stat.label}</span>
+            <small>{stat.note}</small>
+          </div>
+        ))}
+      </Reveal>
+    </section>
+  );
+}
+
 function HomePage() {
   const reduceMotion = useReducedMotion();
 
   return (
     <>
       <section className="hero section-wrap">
+        <div className="hero-aurora" aria-hidden="true">
+          <span className="aurora aurora-one" />
+          <span className="aurora aurora-two" />
+          <span className="aurora aurora-three" />
+        </div>
         <motion.div
           className="hero-copy"
-          initial={reduceMotion ? false : { opacity: 0, y: 20 }}
+          initial={reduceMotion ? false : { opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         >
           <p className="eyebrow"><span className="status-dot" /> TECHNOLOGY · INNOVATION · LEADERSHIP</p>
-          <p className="hello">Hello, I&apos;m <span aria-hidden="true">👋</span></p>
+          <p className="hello">Hello, I&apos;m <span className="wave" aria-hidden="true">👋</span></p>
           <h1>Shiv Om <span className="gradient-text">Mishra</span></h1>
-          <h2 className="role-line">Software Development &amp; Technology</h2>
+          <h2 className="role-line">
+            <span className="sr-only">Software Development &amp; Technology</span>
+            <RotatingRole />
+          </h2>
           <p className="hero-description">
             I bring experience across web development, software engineering and
             technical leadership, with a focus on e-commerce and web applications.
@@ -240,17 +490,12 @@ function HomePage() {
             </a>
           </div>
         </motion.div>
-        <div className="hero-art">
-          <div className="profile-placeholder">
-            <img
-              className="hero-portrait"
-              src="/images/shiv-om-mishra-portrait.png"
-              alt="Portrait of Shiv Om Mishra"
-            />
-          </div>
-        </div>
+        <HeroArt />
         <div className="scroll-note">SCROLL TO EXPLORE <span>↓</span></div>
       </section>
+
+      <Marquee />
+      <StatsStrip />
 
       <Reveal className="about panel section-wrap">
         <div className="about-text">
@@ -483,17 +728,17 @@ function AnimatedRoutes() {
   const reduceMotion = useReducedMotion();
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
-  }, [location.pathname, reduceMotion]);
+    window.scrollTo({ top: 0, behavior: "auto" });
+  }, [location.pathname]);
 
   return (
     <AnimatePresence mode="wait">
       <motion.main
         key={location.pathname}
-        initial={{ opacity: 0, y: reduceMotion ? 0 : 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: reduceMotion ? 0 : -8 }}
-        transition={{ duration: reduceMotion ? 0 : 0.28 }}
+        initial={reduceMotion ? false : { opacity: 0, y: 12, scale: 0.995 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -10, scale: 0.995 }}
+        transition={{ duration: reduceMotion ? 0 : 0.32, ease: [0.22, 1, 0.36, 1] }}
       >
         <Routes location={location}>
           <Route path="/" element={<HomePage />} />
@@ -520,16 +765,62 @@ export default function App() {
   const cursorRef = useRef(null);
 
   useEffect(() => {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const glow = cursorRef.current;
+    if (!glow || reduceMotion) return undefined;
+
+    let targetX = window.innerWidth / 2;
+    let targetY = window.innerHeight / 2;
+    let currentX = targetX;
+    let currentY = targetY;
+    let frame;
+
     const handlePointerMove = (event) => {
-      cursorRef.current?.style.setProperty("--cursor-x", `${event.clientX}px`);
-      cursorRef.current?.style.setProperty("--cursor-y", `${event.clientY}px`);
+      targetX = event.clientX;
+      targetY = event.clientY;
     };
-    window.addEventListener("pointermove", handlePointerMove);
-    return () => window.removeEventListener("pointermove", handlePointerMove);
+
+    const loop = () => {
+      currentX += (targetX - currentX) * 0.12;
+      currentY += (targetY - currentY) * 0.12;
+      glow.style.setProperty("--cursor-x", `${currentX}px`);
+      glow.style.setProperty("--cursor-y", `${currentY}px`);
+      frame = requestAnimationFrame(loop);
+    };
+
+    window.addEventListener("pointermove", handlePointerMove, { passive: true });
+    frame = requestAnimationFrame(loop);
+    return () => {
+      window.removeEventListener("pointermove", handlePointerMove);
+      cancelAnimationFrame(frame);
+    };
+  }, []);
+
+  useEffect(() => {
+    let frame = 0;
+    const handlePointerMove = (event) => {
+      const target = event.target?.closest?.(spotlightSelector);
+      if (!target) return;
+      const rect = target.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        target.style.setProperty("--mx", `${x}px`);
+        target.style.setProperty("--my", `${y}px`);
+      });
+    };
+
+    window.addEventListener("pointermove", handlePointerMove, { passive: true });
+    return () => {
+      window.removeEventListener("pointermove", handlePointerMove);
+      cancelAnimationFrame(frame);
+    };
   }, []);
 
   return (
     <>
+      <ScrollProgress />
       <div className="cursor-glow" ref={cursorRef} aria-hidden="true" />
       <Header />
       <AnimatedRoutes />
