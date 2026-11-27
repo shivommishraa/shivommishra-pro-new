@@ -108,11 +108,11 @@ main, .footer { position: relative; z-index: 1; }
 .hero {
   position: relative;
   display: grid;
-  min-height: 590px;
+  min-height: 560px;
   grid-template-columns: 1fr 1fr;
-  align-items: center;
-  padding-top: 35px;
-  padding-bottom: 75px;
+  align-items: start;
+  padding-top: 24px;
+  padding-bottom: 50px;
 }
 .eyebrow, .section-kicker { color: var(--green); font-size: 10px; font-weight: 700; letter-spacing: 2px; }
 .status-dot {
@@ -247,7 +247,7 @@ h1, h2, h3, p { margin-top: 0; }
 .footer { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 25px 0 35px; border-top: 1px solid var(--line); }
 .footer > p { margin: 0; color: var(--muted); font-size: 10px; }
 .back-top { padding: 0; border: 0; background: none; color: var(--green); font-size: 11px; cursor: pointer; }
-.inner-page { min-height: calc(100vh - 180px); padding-top: 78px; }
+.inner-page { min-height: calc(100vh - 180px); padding-top: 52px; }
 .page-intro { margin-bottom: 54px; }
 .page-intro .eyebrow { margin-bottom: 22px; }
 .page-intro h1 { margin: 0; font-size: clamp(48px, 7vw, 82px); }
@@ -308,7 +308,7 @@ h1, h2, h3, p { margin-top: 0; }
 @media (max-width: 900px) {
   .nav { gap: 18px; }
   .header-cta { display: none; }
-  .hero { min-height: 540px; }
+  .hero { min-height: 520px; }
   .project-art { height: 150px; }
   .education-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
@@ -335,7 +335,7 @@ h1, h2, h3, p { margin-top: 0; }
   .nav.open { display: flex; }
   .nav a { font-size: 13px; }
   .nav a::after { display: none; }
-  .hero { grid-template-columns: 1fr; padding-top: 55px; padding-bottom: 65px; }
+  .hero { min-height: 0; grid-template-columns: 1fr; padding-top: 24px; padding-bottom: 50px; }
   .hello { margin-top: 15px; }
   .hero h1 { font-size: 52px; }
   .hero-art { height: 350px; margin-top: 10px; }
@@ -354,7 +354,7 @@ h1, h2, h3, p { margin-top: 0; }
   .contact .button { margin-top: 22px; }
   .footer { flex-wrap: wrap; gap: 18px; }
   .footer > p { order: 3; width: 100%; }
-  .inner-page { padding-top: 58px; }
+  .inner-page { padding-top: 36px; }
   .page-intro { margin-bottom: 38px; }
   .page-intro h1 { font-size: 49px; letter-spacing: -2.5px; }
   .journey { grid-template-columns: 1fr; gap: 20px; margin-bottom: 65px; padding: 27px; }
