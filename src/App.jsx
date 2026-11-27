@@ -491,7 +491,6 @@ function HomePage() {
           </div>
         </motion.div>
         <HeroArt />
-        <div className="scroll-note">SCROLL TO EXPLORE <span>↓</span></div>
       </section>
 
       <Marquee />
