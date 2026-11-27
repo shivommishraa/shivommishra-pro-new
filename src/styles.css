@@ -1001,3 +1001,56 @@ html { scrollbar-color: #2a3a52 var(--bg); scrollbar-width: thin; }
   .hero-actions .button { padding: 11px 8px; font-size: 10.5px; gap: 5px; }
   .hero-actions .button-primary span { display: none; }
 }
+
+
+/* About section — resume download button */
+.about-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 20px; margin-top: 20px; }
+.about-actions .text-link { margin: 0; }
+.resume-download { min-height: 42px; padding: 9px 17px; font-size: 11.5px; gap: 8px; }
+.resume-download span { font-size: 13px; }
+@media (max-width: 700px) {
+  .about-actions { gap: 12px; }
+  .resume-download { width: 100%; }
+}
+
+/* Resume document — screen par hidden, sirf print / Save as PDF me chapta hai */
+.resume-doc { display: none; }
+
+@media print {
+  @page { size: A4; margin: 12mm; }
+  html, body { background: #fff !important; }
+  body::before, .site-header, .footer, .scroll-progress, .cursor-glow,
+  .back-top, main { display: none !important; }
+  .resume-doc {
+    display: block;
+    color: #111;
+    font: 400 10.5pt/1.5 "DM Sans", Arial, Helvetica, sans-serif;
+  }
+  .rs-head { padding-bottom: 10px; border-bottom: 2px solid #111; }
+  .rs-head h1 { margin: 0; font: 700 21pt/1.15 "Space Grotesk", Arial, sans-serif; letter-spacing: -0.3px; }
+  .rs-role { margin: 4px 0 6px; font: 700 10pt "Space Grotesk", Arial, sans-serif; letter-spacing: 2px; text-transform: uppercase; }
+  .rs-contact { display: flex; flex-wrap: wrap; gap: 2px 7px; margin: 0; color: #222; font-size: 9.5pt; }
+  .rs-sep { color: #999; }
+  .rs-section { margin-top: 13px; break-inside: avoid; page-break-inside: avoid; }
+  .rs-section h2 { margin: 0 0 7px; padding-bottom: 3px; border-bottom: 1px solid #bbb; font: 700 8.5pt "Space Grotesk", Arial, sans-serif; letter-spacing: 1.6px; text-transform: uppercase; }
+  .rs-section p { margin: 0; }
+  .rs-section ul { margin: 0; padding-left: 15px; }
+  .rs-section li { margin-bottom: 1.5px; }
+  .rs-skills { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2px 18px; margin: 0; }
+  .rs-skills div { display: flex; gap: 5px; }
+  .rs-skills dt { flex: 0 0 128px; font-weight: 700; }
+  .rs-skills dd { margin: 0; }
+  .rs-entry { margin-bottom: 8px; break-inside: avoid; page-break-inside: avoid; }
+  .rs-entry:last-child { margin-bottom: 0; }
+  .rs-entry-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 2px 12px; }
+  .rs-entry-head h3 { margin: 0; font: 700 11pt "Space Grotesk", Arial, sans-serif; }
+  .rs-entry-head span { font-size: 9.5pt; }
+  .rs-entry ul { margin-top: 3px; }
+  .rs-entry-sub { margin: 3px 0 0; color: #333; font-size: 9.5pt; }
+  .rs-projects { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px 18px; margin: 0; padding: 0; list-style: none; }
+  .rs-projects li { display: flex; flex-wrap: wrap; align-items: baseline; gap: 3px 6px; }
+  .rs-projects strong { font-size: 10pt; }
+  .rs-project-stack { padding: 0 5px; border: 1px solid #999; border-radius: 3px; font-size: 8pt; }
+  .rs-project-detail { flex-basis: 100%; color: #333; font-size: 8.8pt; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}

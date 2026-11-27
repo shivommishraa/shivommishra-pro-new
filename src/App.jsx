@@ -18,6 +18,7 @@ import {
 } from "react-router-dom";
 import ProjectsPage, { projects as portfolioProjects } from "./ProjectsPage.jsx";
 import BeyondCodePage from "./BeyondCodePage.jsx";
+import ResumeDocument from "./ResumeDocument.jsx";
 
 const emailAddress = "shivommishraa@gmail.com";
 const phoneNumber = "895-3000-895";
@@ -515,7 +516,12 @@ function HomePage() {
             application work.
           </p>
           <p>My project experience includes Magento, Laravel, CodeIgniter and mobile application development.</p>
-          <Link className="text-link" to="/about">More about me <span>→</span></Link>
+          <div className="about-actions">
+            <Link className="text-link" to="/about">More about me <span>→</span></Link>
+            <button className="button button-outline resume-download" type="button" onClick={() => window.print()}>
+              Download Resume <span aria-hidden="true">↓</span>
+            </button>
+          </div>
         </div>
         <CodeWindow />
       </Reveal>
@@ -904,6 +910,7 @@ export default function App() {
       <Header />
       <AnimatedRoutes />
       <Footer />
+      <ResumeDocument />
     </>
   );
 }
