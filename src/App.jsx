@@ -361,6 +361,7 @@ const cardMotion = {
 function HeroArt() {
   const reduceMotion = useReducedMotion();
   const [wide, setWide] = useState(() => window.matchMedia("(min-width: 701px)").matches);
+  const finePointer = useRef(window.matchMedia("(hover: hover) and (pointer: fine)").matches);
   const rotateX = useMotionValue(0);
   const rotateY = useMotionValue(0);
   const smoothX = useSpring(rotateX, { stiffness: 140, damping: 18, mass: 0.35 });
@@ -380,7 +381,7 @@ function HeroArt() {
   }, []);
 
   function handlePointerMove(event) {
-    if (reduceMotion) return;
+    if (reduceMotion || !finePointer.current) return;
     const rect = event.currentTarget.getBoundingClientRect();
     const px = (event.clientX - rect.left) / rect.width - 0.5;
     const py = (event.clientY - rect.top) / rect.height - 0.5;
@@ -772,30 +773,40 @@ export default function App() {
 
   useEffect(() => {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
     const glow = cursorRef.current;
-    if (!glow || reduceMotion) return undefined;
+    if (!glow || reduceMotion || !finePointer) return undefined;
 
     let targetX = window.innerWidth / 2;
     let targetY = window.innerHeight / 2;
     let currentX = targetX;
     let currentY = targetY;
-    let frame;
+    let frame = 0;
+    let running = false;
+
+    const loop = () => {
+      const dx = targetX - currentX;
+      const dy = targetY - currentY;
+      if (Math.abs(dx) < 0.5 && Math.abs(dy) < 0.5) {
+        running = false;
+        return;
+      }
+      currentX += dx * 0.15;
+      currentY += dy * 0.15;
+      glow.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
+      frame = requestAnimationFrame(loop);
+    };
 
     const handlePointerMove = (event) => {
       targetX = event.clientX;
       targetY = event.clientY;
-    };
-
-    const loop = () => {
-      currentX += (targetX - currentX) * 0.12;
-      currentY += (targetY - currentY) * 0.12;
-      glow.style.setProperty("--cursor-x", `${currentX}px`);
-      glow.style.setProperty("--cursor-y", `${currentY}px`);
-      frame = requestAnimationFrame(loop);
+      if (!running) {
+        running = true;
+        frame = requestAnimationFrame(loop);
+      }
     };
 
     window.addEventListener("pointermove", handlePointerMove, { passive: true });
-    frame = requestAnimationFrame(loop);
     return () => {
       window.removeEventListener("pointermove", handlePointerMove);
       cancelAnimationFrame(frame);
@@ -803,6 +814,7 @@ export default function App() {
   }, []);
 
   useEffect(() => {
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return undefined;
     let frame = 0;
     const handlePointerMove = (event) => {
       const target = event.target?.closest?.(spotlightSelector);
