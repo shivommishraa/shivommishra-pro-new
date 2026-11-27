@@ -240,7 +240,7 @@ h1, h2, h3, p { margin-top: 0; }
 .contact p:not(.section-kicker) { margin: 0; color: var(--muted); font-size: 13px; }
 .footer { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 25px 0 35px; border-top: 1px solid var(--line); }
 .footer > p { margin: 0; color: var(--muted); font-size: 10px; }
-.back-top { color: var(--green); font-size: 11px; }
+.back-top { padding: 0; border: 0; background: none; color: var(--green); font-size: 11px; cursor: pointer; }
 .inner-page { min-height: calc(100vh - 180px); padding-top: 78px; }
 .page-intro { margin-bottom: 54px; }
 .page-intro .eyebrow { margin-bottom: 22px; }

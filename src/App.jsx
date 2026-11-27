@@ -120,13 +120,19 @@ function Header() {
 }
 
 function Footer() {
+  const reduceMotion = useReducedMotion();
+
   return (
     <footer className="footer section-wrap">
       <Brand />
       <p>Designed &amp; built with curiosity. © {new Date().getFullYear()} Shiv Om Mishra.</p>
-      <Link to="/" className="back-top">
+      <button
+        type="button"
+        className="back-top"
+        onClick={() => window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" })}
+      >
         Back to top ↑
-      </Link>
+      </button>
     </footer>
   );
 }
