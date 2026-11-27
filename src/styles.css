@@ -296,6 +296,7 @@ h1, h2, h3, p { margin-top: 0; }
 .contact-form-wrap input::placeholder, .contact-form-wrap textarea::placeholder { color: #718099; }
 .contact-form-wrap .button { align-self: flex-start; }
 .form-note { margin: 14px 0 0 !important; color: var(--green) !important; font-size: 11px !important; }
+.form-note a { text-decoration: underline; text-underline-offset: 3px; }
 .cursor-glow { position: fixed; z-index: 0; top: var(--cursor-y, -300px); left: var(--cursor-x, -300px); width: 260px; height: 260px; border-radius: 50%; background: #5dff7712; filter: blur(30px); pointer-events: none; transform: translate(-50%, -50%); transition: top 0.12s ease-out, left 0.12s ease-out; }
 
 @media (max-width: 900px) {

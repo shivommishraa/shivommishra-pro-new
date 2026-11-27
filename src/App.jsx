@@ -16,9 +16,11 @@ import BeyondCodePage from "./BeyondCodePage.jsx";
 
 const emailAddress = "shivommishraa@gmail.com";
 const phoneNumber = "895-3000-895";
+const whatsappNumber = "918953000895";
 
 const skills = [
   { icon: "M", name: "Magento 2", note: "E-commerce development", color: "orange" },
+  { icon: "D", name: "Drupal", note: "Content management system", color: "blue" },
   { icon: "</>", name: "PHP", note: "Backend development", color: "blue" },
   { icon: "L", name: "Laravel", note: "Web applications", color: "red" },
   { icon: "JS", name: "JavaScript", note: "Interactive interfaces", color: "yellow" },
@@ -33,6 +35,13 @@ const skills = [
 
 const featuredProjectNames = ["Hoya Contact Lenses", "SSG MART", "Career Alfa"];
 const projects = portfolioProjects.filter((project) => featuredProjectNames.includes(project.name));
+const careerPath = [
+  { label: "CAREER PATH · STEP 1", title: "Trainee Web Developer" },
+  { label: "CAREER PATH · STEP 2", title: "Web Developer" },
+  { label: "CAREER PATH · STEP 3", title: "Software Engineer" },
+  { label: "CAREER PATH · STEP 4", title: "Senior Software Engineer" },
+  { label: "CURRENT ROLE · SEPTEMBER 2026–PRESENT", title: "Technical Leader" },
+];
 
 function Reveal({ children, className = "", delay = 0 }) {
   const reduceMotion = useReducedMotion();
@@ -293,6 +302,8 @@ function CodeWindow() {
 }
 
 function AboutPage() {
+  const reduceMotion = useReducedMotion();
+
   return (
     <PageShell kicker="A LITTLE ABOUT ME" title="Curious by nature." highlight="Developer by choice.">
       <Reveal className="about panel about-page-card">
@@ -320,33 +331,32 @@ function AboutPage() {
           <p className="section-kicker">02 / THE JOURNEY</p>
           <h2>Experience &amp; <span className="gradient-text">growth.</span></h2>
         </div>
-        <div className="timeline">
-          <div className="timeline-item">
-            <span className="timeline-dot" />
-            <small>CAREER PATH · STEP 1</small>
-            <h3>Trainee Web Developer</h3>
-          </div>
-          <div className="timeline-item">
-            <span className="timeline-dot" />
-            <small>CAREER PATH · STEP 2</small>
-            <h3>Web Developer</h3>
-          </div>
-          <div className="timeline-item">
-            <span className="timeline-dot" />
-            <small>CAREER PATH · STEP 3</small>
-            <h3>Software Engineer</h3>
-          </div>
-          <div className="timeline-item">
-            <span className="timeline-dot" />
-            <small>CAREER PATH · STEP 4</small>
-            <h3>Senior Software Engineer</h3>
-          </div>
-          <div className="timeline-item">
-            <span className="timeline-dot" />
-            <small>CURRENT ROLE · SEPTEMBER 2026–PRESENT</small>
-            <h3>Technical Leader</h3>
-          </div>
-        </div>
+        <motion.div
+          className="timeline"
+          initial={reduceMotion ? false : "hidden"}
+          whileInView={reduceMotion ? undefined : "show"}
+          viewport={{ once: true, amount: 0.2 }}
+          variants={{
+            hidden: {},
+            show: { transition: { staggerChildren: 0.14 } },
+          }}
+        >
+          {careerPath.map((step) => (
+            <motion.div
+              className="timeline-item"
+              key={step.title}
+              variants={{
+                hidden: { opacity: 0, x: -16 },
+                show: { opacity: 1, x: 0 },
+              }}
+              transition={{ duration: reduceMotion ? 0 : 0.45, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <span className="timeline-dot" />
+              <small>{step.label}</small>
+              <h3>{step.title}</h3>
+            </motion.div>
+          ))}
+        </motion.div>
       </Reveal>
       <section className="section-block education-block">
         <SectionHeading
@@ -376,17 +386,21 @@ function AboutPage() {
 }
 
 function ContactPage() {
-  const [sent, setSent] = useState(false);
+  const [whatsappUrl, setWhatsappUrl] = useState("");
 
   function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    const subject = encodeURIComponent(`Portfolio enquiry from ${formData.get("name")}`);
-    const body = encodeURIComponent(
-      `Name: ${formData.get("name")}\nEmail: ${formData.get("email")}\n\n${formData.get("message")}`,
-    );
-    window.location.href = `mailto:${emailAddress}?subject=${subject}&body=${body}`;
-    setSent(true);
+    const message = [
+      "Portfolio enquiry",
+      `Name: ${formData.get("name")}`,
+      `Email: ${formData.get("email")}`,
+      "",
+      `${formData.get("message")}`,
+    ].join("\n");
+    const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+    setWhatsappUrl(url);
+    window.open(url, "_blank", "noopener,noreferrer");
   }
 
   return (
@@ -398,7 +412,7 @@ function ContactPage() {
           <h2>Good things start with a <span className="gradient-text">hello.</span></h2>
           <p>Tell me a little about what you&apos;re working on. I&apos;d love to hear about your idea and explore how we can build something great together.</p>
           <a className="contact-email" href={`mailto:${emailAddress}`}>{emailAddress}<span>↗</span></a>
-          <a className="contact-email" href="tel:8953000895">{phoneNumber}<span>↗</span></a>
+          <a className="contact-email" href={`https://wa.me/${whatsappNumber}`} target="_blank" rel="noopener noreferrer">WhatsApp · {phoneNumber}<span>↗</span></a>
         </Reveal>
         <Reveal className="contact-form-wrap panel" delay={0.1}>
           <form onSubmit={handleSubmit}>
@@ -409,7 +423,12 @@ function ContactPage() {
             <label htmlFor="message">Tell me about your project</label>
             <textarea id="message" name="message" rows="5" placeholder="A few details about your idea..." required />
             <button className="button button-primary" type="submit">Send a message <span>↗</span></button>
-            {sent && <p className="form-note" role="status">Your email app should open with the message ready to send.</p>}
+            {whatsappUrl && (
+              <p className="form-note" role="status">
+                WhatsApp has your message ready for {phoneNumber}. Review it and press Send to deliver.
+                {" "}If it didn&apos;t open, <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">open WhatsApp here</a>.
+              </p>
+            )}
           </form>
         </Reveal>
       </div>
