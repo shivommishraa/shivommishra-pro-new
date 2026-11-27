@@ -244,10 +244,6 @@ export default function BeyondCodePage() {
             <p>Completed a course with Red Cross and St John Ambulance.</p>
           </RevealCard>
         </div>
-        <p className="beyond-media-note">
-          <Icon name="pen" />
-          Training certificates and event photographs can be added when available.
-        </p>
       </section>
 
       <section className="beyond-section recognition-section" aria-labelledby="recognition-heading">
