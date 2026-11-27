@@ -217,7 +217,7 @@ function HomePage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
         >
-          <p className="eyebrow"><span className="status-dot" /> TECHNICAL LEADER · SINCE SEPTEMBER 2026</p>
+          <p className="eyebrow"><span className="status-dot" /> TECHNOLOGY · INNOVATION · LEADERSHIP</p>
           <p className="hello">Hello, I&apos;m <span aria-hidden="true">👋</span></p>
           <h1>Shiv Om <span className="gradient-text">Mishra</span></h1>
           <h2 className="role-line">Software Development &amp; Technology</h2>
