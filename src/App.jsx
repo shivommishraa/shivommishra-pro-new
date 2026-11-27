@@ -11,75 +11,28 @@ import {
   Routes,
   useLocation,
 } from "react-router-dom";
+import ProjectsPage, { projects as portfolioProjects } from "./ProjectsPage.jsx";
+import BeyondCodePage from "./BeyondCodePage.jsx";
 
-const emailAddress = "your-email@example.com";
+const emailAddress = "shivommishraa@gmail.com";
+const phoneNumber = "895-3000-895";
 
 const skills = [
   { icon: "M", name: "Magento 2", note: "E-commerce development", color: "orange" },
   { icon: "</>", name: "PHP", note: "Backend development", color: "blue" },
   { icon: "L", name: "Laravel", note: "Web applications", color: "red" },
   { icon: "JS", name: "JavaScript", note: "Interactive interfaces", color: "yellow" },
-  { icon: "Py", name: "Python", note: "Automation and AI", color: "cyan" },
+  { icon: "CI", name: "CodeIgniter", note: "PHP web applications", color: "red" },
   { icon: "F", name: "Flutter", note: "Cross-platform apps", color: "sky" },
+  { icon: "A", name: "Android", note: "Mobile applications", color: "teal" },
+  { icon: "Py", name: "Python", note: "Programming", color: "cyan" },
   { icon: "DB", name: "MySQL", note: "Data and databases", color: "teal" },
   { icon: "Git", name: "Git", note: "Version control", color: "violet" },
+  { icon: "AWS", name: "AWS", note: "Cloud services", color: "orange" },
 ];
 
-const projects = [
-  {
-    name: "SSG MART",
-    description: "Grocery store brand and digital shopping concept.",
-    category: "E-commerce",
-    art: "mart",
-    mark: "SSG",
-    title: "MART",
-    subtitle: "GROCERY & ESSENTIALS",
-    tags: ["Branding", "E-commerce"],
-  },
-  {
-    name: "Magento AI Assistant",
-    description: "AI-assisted product description module concept.",
-    category: "AI & E-commerce",
-    art: "ai",
-    mark: "✳",
-    title: "AI",
-    subtitle: "PRODUCT DESCRIPTION",
-    tags: ["Magento 2", "PHP", "AI"],
-  },
-  {
-    name: "College CMS",
-    description: "Learning project for college administration workflows.",
-    category: "Web application",
-    art: "cms",
-    mark: "▦",
-    title: "CMS",
-    subtitle: "COLLEGE MANAGEMENT",
-    tags: ["Laravel", "CRUD"],
-  },
-];
-
-const services = [
-  {
-    icon: "⌘",
-    title: "Web Development",
-    description: "Responsive, accessible websites and web applications.",
-  },
-  {
-    icon: "◈",
-    title: "Magento Development",
-    description: "Store customizations, modules and e-commerce support.",
-  },
-  {
-    icon: "↔",
-    title: "API Integration",
-    description: "Connecting platforms and streamlining data workflows.",
-  },
-  {
-    icon: "⚙",
-    title: "Maintenance & Support",
-    description: "Improvements, troubleshooting and ongoing website care.",
-  },
-];
+const featuredProjectNames = ["Hoya Contact Lenses", "SSG MART", "Career Alfa"];
+const projects = portfolioProjects.filter((project) => featuredProjectNames.includes(project.name));
 
 function Reveal({ children, className = "", delay = 0 }) {
   const reduceMotion = useReducedMotion();
@@ -104,7 +57,7 @@ function Brand() {
       </span>
       <span className="brand-copy">
         Shiv Om Mishra
-        <small>Full Stack Developer</small>
+        <small>Technical Leader</small>
       </span>
     </Link>
   );
@@ -134,6 +87,7 @@ function Header() {
           ["Home", "/"],
           ["About", "/about"],
           ["Projects", "/projects"],
+          ["Beyond Code", "/beyond-code"],
           ["Contact", "/contact"],
         ].map(([label, path]) => (
           <NavLink
@@ -184,23 +138,26 @@ function ProjectCard({ project, index = 0 }) {
   return (
     <Reveal delay={index * 0.08}>
       <article className="project-card">
-        <div className={`project-art ${project.art}-art`}>
-          <span>{project.mark}</span>
-          <b>{project.title}</b>
-          <small>{project.subtitle}</small>
+        <div className="project-art web-project-art">
+          <span>{project.name.slice(0, 2).toUpperCase()}</span>
+          <b>{project.name}</b>
+          <small>{project.technologies.join(" · ")}</small>
           <span className="art-orb" aria-hidden="true" />
         </div>
         <div className="project-info">
           <div>
-            <p className="project-category">{project.category}</p>
+            <p className="project-category">{project.categories[0]}</p>
             <h3>{project.name}</h3>
-            <p>{project.description}</p>
+            <p>{project.contribution}</p>
           </div>
           <span className="project-arrow" aria-hidden="true">↗</span>
         </div>
         <div className="tags">
-          {project.tags.map((tag) => <span key={tag}>{tag}</span>)}
+          {project.technologies.map((technology) => <span key={technology}>{technology}</span>)}
         </div>
+        <a className="project-preview-link" href={project.url} target="_blank" rel="noreferrer">
+          Visit website <span aria-hidden="true">↗</span>
+        </a>
       </article>
     </Reveal>
   );
@@ -233,16 +190,6 @@ const cardMotion = {
 
 function HomePage() {
   const reduceMotion = useReducedMotion();
-  const roles = ["Full Stack Developer", "Magento Developer", "Web Enthusiast"];
-  const [roleIndex, setRoleIndex] = useState(0);
-
-  useEffect(() => {
-    if (reduceMotion) return undefined;
-    const timer = window.setInterval(() => {
-      setRoleIndex((index) => (index + 1) % roles.length);
-    }, 2400);
-    return () => window.clearInterval(timer);
-  }, [reduceMotion, roles.length]);
 
   return (
     <>
@@ -253,47 +200,31 @@ function HomePage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
         >
-          <p className="eyebrow"><span className="status-dot" /> AVAILABLE FOR OPPORTUNITIES</p>
-          <p className="hello">Hello, I&apos;m <span className="wave" aria-hidden="true">👋</span></p>
+          <p className="eyebrow"><span className="status-dot" /> TECHNICAL LEADER · SINCE SEPTEMBER 2026</p>
+          <p className="hello">Hello, I&apos;m <span aria-hidden="true">👋</span></p>
           <h1>Shiv Om <span className="gradient-text">Mishra</span></h1>
-          <h2 className="role-line" aria-live="polite">
-            {roles[roleIndex]}<i className="typing-caret" aria-hidden="true" />
-          </h2>
+          <h2 className="role-line">Technical Leader</h2>
           <p className="hero-description">
-            I build thoughtful digital experiences, scalable web applications and
-            e-commerce solutions that turn ideas into reality.
+            I bring experience across web development, software engineering and
+            technical leadership, with a focus on e-commerce and web applications.
           </p>
           <div className="hero-actions">
             <Link className="button button-primary" to="/projects">Explore my work <span>↗</span></Link>
             <Link className="button button-outline" to="/contact">Contact me</Link>
           </div>
           <div className="social-links">
-            <a href="https://www.linkedin.com/" aria-label="LinkedIn">in</a>
-            <a href="https://github.com/" aria-label="GitHub">⌘</a>
             <a href={`mailto:${emailAddress}`} aria-label="Email">✉</a>
           </div>
         </motion.div>
-        <motion.div
-          className="hero-art"
-          initial={reduceMotion ? false : { opacity: 0, scale: 0.94 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.85, delay: 0.12 }}
-          aria-label="Decorative developer illustration"
-        >
-          <div className="orbit orbit-one" />
-          <div className="orbit orbit-two" />
-          <div className="code-float code-one">&lt;/&gt;</div>
-          <div className="code-float code-two">{"{ }"}</div>
+        <div className="hero-art">
           <div className="profile-placeholder">
-            <div className="profile-initials">SOM</div>
-            <span>YOUR PHOTO HERE</span>
+            <img
+              className="hero-portrait"
+              src="/images/shiv-om-mishra-portrait.png"
+              alt="Portrait of Shiv Om Mishra"
+            />
           </div>
-          <div className="floating-card">
-            <span className="mini-icon">✦</span>
-            <div><b>Clean code.</b><small>Creative solutions.</small></div>
-          </div>
-          <div className="art-caption">CODE<br />CREATE<br /><em>INNOVATE.</em></div>
-        </motion.div>
+        </div>
         <div className="scroll-note">SCROLL TO EXPLORE <span>↓</span></div>
       </section>
 
@@ -302,11 +233,11 @@ function HomePage() {
           <p className="section-kicker">01 / A LITTLE ABOUT ME</p>
           <h2>Turning ideas into<br /><span className="gradient-text">digital reality.</span></h2>
           <p>
-            I&apos;m Shiv Om Mishra, a developer passionate about building useful,
-            reliable and user-friendly digital products. My work spans e-commerce
-            development, backend integrations and modern web technologies.
+            I&apos;m Shiv Om Mishra, a Technical Leader whose career has progressed
+            through web development, software engineering and senior software
+            engineering. I focus on practical e-commerce and web application work.
           </p>
-          <p>I enjoy solving real-world problems, learning new tools and creating experiences that feel as good as they work.</p>
+          <p>My project experience includes Magento, Laravel, CodeIgniter and mobile application development.</p>
           <Link className="text-link" to="/about">More about me <span>→</span></Link>
         </div>
         <CodeWindow />
@@ -328,7 +259,7 @@ function HomePage() {
           kicker="03 / SELECTED WORK"
           title="Featured"
           highlight="projects."
-          description="A few ideas and builds from my development journey."
+          description="Selected e-commerce implementations across Magento, Laravel and CodeIgniter."
         />
         <div className="project-grid">
           {projects.map((project, index) => <ProjectCard key={project.name} project={project} index={index} />)}
@@ -369,13 +300,12 @@ function AboutPage() {
           <p className="section-kicker">MY APPROACH</p>
           <h2>Building useful things,<br /><span className="gradient-text">one detail at a time.</span></h2>
           <p>
-            I&apos;m Shiv Om Mishra, a developer passionate about creating useful,
-            reliable and user-friendly digital products. My work spans e-commerce
-            development, backend integrations and modern web technologies.
+            I&apos;m Shiv Om Mishra, a Technical Leader with a career path through
+            Web Developer, Software Engineer and Senior Software Engineer roles.
+            My project work spans e-commerce, web platforms and mobile applications.
           </p>
           <p>
-            I enjoy solving real-world problems, learning new tools and making
-            digital experiences feel as good as they work.
+            I have been working as a Technical Leader since September 2026.
           </p>
         </div>
         <CodeWindow />
@@ -392,40 +322,41 @@ function AboutPage() {
         <div className="timeline">
           <div className="timeline-item">
             <span className="timeline-dot" />
-            <small>PROFESSIONAL EXPERIENCE</small>
-            <h3>Web Developer</h3>
-            <p>Working on web development, CMS updates, e-commerce solutions and website improvements.</p>
+            <small>CURRENT ROLE · SEPTEMBER 2026–PRESENT</small>
+            <h3>Technical Leader</h3>
+            <p>Technical Leader since September 2026.</p>
           </div>
           <div className="timeline-item">
             <span className="timeline-dot" />
-            <small>CONTINUOUS LEARNING</small>
-            <h3>Building &amp; experimenting</h3>
-            <p>Exploring AI integrations, modern frameworks and practical application development.</p>
+            <small>PREVIOUS ROLES</small>
+            <h3>Career progression</h3>
+            <p>Web Developer → Software Engineer → Senior Software Engineer</p>
           </div>
         </div>
       </Reveal>
-      <Callout />
-    </PageShell>
-  );
-}
-
-function ProjectsPage() {
-  return (
-    <PageShell kicker="A FEW THINGS I'VE WORKED ON" title="Ideas made" highlight="real.">
-      <section className="projects-page-content">
-        <div className="project-grid project-grid-large">
-          {projects.map((project, index) => <ProjectCard key={project.name} project={project} index={index} />)}
+      <section className="section-block education-block">
+        <SectionHeading
+          kicker="03 / EDUCATION"
+          title="Academic"
+          highlight="background."
+          description="Education in information technology and computer science."
+        />
+        <div className="education-grid">
+          <article className="education-card">
+            <span>D</span>
+            <h3>Diploma in Information Technology</h3>
+          </article>
+          <article className="education-card">
+            <span>B.Tech</span>
+            <h3>Bachelor of Technology in Computer Science and Engineering</h3>
+          </article>
+          <article className="education-card">
+            <span>M.Tech</span>
+            <h3>Master of Technology in Computer Science and Engineering</h3>
+          </article>
         </div>
-        <Reveal className="project-note panel">
-          <span className="note-icon">✳</span>
-          <div>
-            <p className="section-kicker">ALWAYS BUILDING</p>
-            <h2>Have an idea in mind?</h2>
-            <p>I&apos;m always interested in thoughtful projects and new ways to solve real problems.</p>
-          </div>
-          <Link className="button button-primary" to="/contact">Let&apos;s talk <span>↗</span></Link>
-        </Reveal>
       </section>
+      <Callout />
     </PageShell>
   );
 }
@@ -453,10 +384,7 @@ function ContactPage() {
           <h2>Good things start with a <span className="gradient-text">hello.</span></h2>
           <p>Tell me a little about what you&apos;re working on. I&apos;d love to hear about your idea and explore how we can build something great together.</p>
           <a className="contact-email" href={`mailto:${emailAddress}`}>{emailAddress}<span>↗</span></a>
-          <div className="contact-socials">
-            <a href="https://www.linkedin.com/">LinkedIn ↗</a>
-            <a href="https://github.com/">GitHub ↗</a>
-          </div>
+          <a className="contact-email" href="tel:8953000895">{phoneNumber}<span>↗</span></a>
         </Reveal>
         <Reveal className="contact-form-wrap panel" delay={0.1}>
           <form onSubmit={handleSubmit}>
@@ -521,6 +449,7 @@ function AnimatedRoutes() {
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/projects" element={<ProjectsPage />} />
+          <Route path="/beyond-code" element={<BeyondCodePage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>

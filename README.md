@@ -10,11 +10,12 @@ A responsive, animated, multi-page portfolio built with React, Vite, React Route
 
 Run `npm run build` to create a production build in `dist/`.
 
-## Before publishing
+## Portfolio content
 
-- Replace the profile placeholder with your own photo.
-- Update `your-email@example.com` in `src/App.jsx`.
-- Add your real LinkedIn and GitHub profile URLs in `src/App.jsx`.
-- Review the experience and project descriptions and adjust them to your verified details.
+- Project details and verified technology tags are maintained in `src/ProjectsPage.jsx`.
+- Contact details, education, experience and skills are maintained in `src/App.jsx`.
+- Beyond Code achievements and literary highlights are maintained in `src/BeyondCodePage.jsx`.
+- Only add public profile links, employer names, dates or credentials after verifying them.
+- This is a static portfolio with no admin/authentication backend; content and media are updated in source.
 
 Google Fonts are loaded from the web; system fallbacks are included.
