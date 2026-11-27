@@ -535,13 +535,6 @@ h1, h2, h3, p { margin-top: 0; }
 .literary-highlights > div { display: flex; align-items: flex-start; gap: 10px; min-height: 78px; padding: 14px; border: 1px solid #ffffff12; border-radius: 13px; background: #ffffff07; color: #d8d0c4; font-size: 10px; line-height: 1.7; }
 .literary-highlights svg { width: 17px; height: 17px; flex: 0 0 17px; margin-top: 1px; color: #ddc28e; }
 .literary-highlights strong { color: #f3dfb2; font-weight: 600; }
-.poetry-archive { position: relative; display: flex; min-height: 150px; align-items: center; gap: 20px; padding: 26px 30px; overflow: hidden; border: 1px dashed #b28bff55; border-radius: 18px; background: linear-gradient(110deg, #171526, #101522); }
-.poetry-book-icon { display: grid; width: 52px; height: 52px; flex: 0 0 52px; place-items: center; border: 1px solid #b28bff35; border-radius: 15px; background: #b28bff0d; color: #c4a8ff; }
-.poetry-book-icon svg { width: 27px; height: 27px; }
-.poetry-archive h3 { margin: 0 0 7px; color: #eee7fa; font: 600 17px var(--display); }
-.poetry-archive p { max-width: 600px; margin: 0; color: var(--muted); font-size: 11px; line-height: 1.75; }
-.archive-mark { position: absolute; right: 35px; color: #b28bff18; }
-.archive-mark svg { width: 80px; height: 80px; stroke-width: 1; }
 .journey-section .beyond-section-title { margin-bottom: 18px; }
 .journey-groups { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
 .journey-group { padding: 22px; border: 1px solid var(--line); border-radius: 17px; background: linear-gradient(145deg, #111b2bd9, #0b1220e8); }
@@ -583,11 +576,5 @@ h1, h2, h3, p { margin-top: 0; }
   .literary-kicker { font-size: 8px; letter-spacing: 1px; }
   .literary-heading-row h2 { font-size: 22px; }
   .devanagari-quote { margin: 23px 0; padding-left: 15px; font-size: 16px; line-height: 1.9; }
-  .poetry-archive { align-items: flex-start; gap: 13px; padding: 21px 17px; }
-  .poetry-book-icon { width: 42px; height: 42px; flex-basis: 42px; border-radius: 12px; }
-  .poetry-book-icon svg { width: 22px; height: 22px; }
-  .poetry-archive h3 { font-size: 15px; }
-  .archive-mark { right: 12px; bottom: 8px; }
-  .archive-mark svg { width: 52px; height: 52px; }
   .journey-group { padding: 20px; }
 }

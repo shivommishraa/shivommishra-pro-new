@@ -322,24 +322,6 @@ export default function BeyondCodePage() {
         </div>
       </section>
 
-      <section className="beyond-section poetry-section" aria-labelledby="poetry-heading">
-        <SectionTitle
-          kicker="SELECTED WRITING"
-          title="My Poetry"
-          highlight="& Publications"
-          description="A dedicated space for selected poems and published literary work."
-          headingId="poetry-heading"
-        />
-        <div className="poetry-archive">
-          <span className="poetry-book-icon"><Icon name="book" /></span>
-          <div>
-            <h3>Words, gathered over time.</h3>
-            <p>Selected poems, publication details and magazine covers can be featured here when you share them.</p>
-          </div>
-          <span className="archive-mark" aria-hidden="true"><Icon name="feather" /></span>
-        </div>
-      </section>
-
       <section className="beyond-section journey-section" aria-labelledby="journey-heading">
         <SectionTitle
           kicker="MILESTONES & TIMELINE"
