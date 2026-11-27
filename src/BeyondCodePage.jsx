@@ -79,6 +79,11 @@ const journeyGroups = [
         description: "Successfully completed leadership development training at IIM Lucknow.",
         date: "2025",
       },
+      {
+        icon: "academic",
+        title: "Red Cross & St John Ambulance Course",
+        description: "Completed a course with Red Cross and St John Ambulance.",
+      },
     ],
   },
   {
@@ -207,7 +212,7 @@ export default function BeyondCodePage() {
           kicker="LEARNING & COMMUNITY"
           title="Leadership &"
           highlight="Continuous Learning"
-          description="Professional development and time spent learning with the Magento community."
+          description="Professional development, community learning and additional training."
           headingId="leadership-heading"
         />
         <div className="beyond-card-grid">
@@ -231,6 +236,12 @@ export default function BeyondCodePage() {
             <h3>Indian Institute of Management, Lucknow</h3>
             <p>Successfully completed Leadership Development Training at IIM Lucknow—an important milestone in my professional and leadership development.</p>
             <span className="beyond-card-foot">IIM Lucknow · 2025</span>
+          </RevealCard>
+          <RevealCard className="beyond-card leadership-card" index={3}>
+            <span className="beyond-icon"><Icon name="academic" /></span>
+            <p className="beyond-card-kicker">ADDITIONAL TRAINING</p>
+            <h3>Red Cross &amp; St John Ambulance</h3>
+            <p>Completed a course with Red Cross and St John Ambulance.</p>
           </RevealCard>
         </div>
         <p className="beyond-media-note">

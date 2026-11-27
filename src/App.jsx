@@ -16,6 +16,7 @@ import BeyondCodePage from "./BeyondCodePage.jsx";
 
 const emailAddress = "shivommishraa@gmail.com";
 const phoneNumber = "895-3000-895";
+const phoneDigits = "8953000895";
 const whatsappNumber = "918953000895";
 
 const skills = [
@@ -24,6 +25,7 @@ const skills = [
   { icon: "</>", name: "PHP", note: "Backend development", color: "blue" },
   { icon: "L", name: "Laravel", note: "Web applications", color: "red" },
   { icon: "JS", name: "JavaScript", note: "Interactive interfaces", color: "yellow" },
+  { icon: "R", name: "React.js", note: "UI library", color: "cyan" },
   { icon: "CI", name: "CodeIgniter", note: "PHP web applications", color: "red" },
   { icon: "F", name: "Flutter", note: "Cross-platform apps", color: "sky" },
   { icon: "A", name: "Android", note: "Mobile applications", color: "teal" },
@@ -413,6 +415,7 @@ function ContactPage() {
           <p>Tell me a little about what you&apos;re working on. I&apos;d love to hear about your idea and explore how we can build something great together.</p>
           <a className="contact-email" href={`mailto:${emailAddress}`}>{emailAddress}<span>↗</span></a>
           <a className="contact-email" href={`https://wa.me/${whatsappNumber}`} target="_blank" rel="noopener noreferrer">WhatsApp · {phoneNumber}<span>↗</span></a>
+          <a className="contact-email" href={`tel:${phoneDigits}`}>Call · {phoneNumber}<span>↗</span></a>
         </Reveal>
         <Reveal className="contact-form-wrap panel" delay={0.1}>
           <form onSubmit={handleSubmit}>
