@@ -360,6 +360,7 @@ const cardMotion = {
 
 function HeroArt() {
   const reduceMotion = useReducedMotion();
+  const [wide, setWide] = useState(() => window.matchMedia("(min-width: 701px)").matches);
   const rotateX = useMotionValue(0);
   const rotateY = useMotionValue(0);
   const smoothX = useSpring(rotateX, { stiffness: 140, damping: 18, mass: 0.35 });
@@ -369,6 +370,14 @@ function HeroArt() {
     stiffness: 70,
     damping: 22,
   });
+
+  useEffect(() => {
+    const query = window.matchMedia("(min-width: 701px)");
+    const update = () => setWide(query.matches);
+    update();
+    query.addEventListener("change", update);
+    return () => query.removeEventListener("change", update);
+  }, []);
 
   function handlePointerMove(event) {
     if (reduceMotion) return;
@@ -394,13 +403,13 @@ function HeroArt() {
         style={{
           rotateX: smoothX,
           rotateY: smoothY,
-          y: parallaxY,
+          y: wide && !reduceMotion ? parallaxY : 0,
           transformPerspective: 1100,
         }}
       >
         <img
           className="hero-portrait"
-          src="/images/shiv-om-mishra-portrait.png"
+          src="/images/shiv-om-mishra-face.jpg"
           alt="Portrait of Shiv Om Mishra"
         />
         <span className="portrait-sheen" aria-hidden="true" />
@@ -478,9 +487,7 @@ function HomePage() {
           <div className="hero-actions">
             <Link className="button button-primary" to="/projects">Explore my work <span>↗</span></Link>
             <Link className="button button-outline" to="/contact">Contact me</Link>
-          </div>
-          <div className="social-links">
-            <a className="hero-email-link" href={`mailto:${emailAddress}`}>
+            <a className="hero-email-link" href={`mailto:${emailAddress}`} aria-label={`Email ${emailAddress}`}>
               <span className="hero-email-icon" aria-hidden="true">✉</span>
               <span className="hero-email-copy">
                 <small>Email me</small>
