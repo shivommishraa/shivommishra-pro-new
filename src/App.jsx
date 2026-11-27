@@ -478,7 +478,7 @@ function HomePage() {
           <p className="hello">Hello, I&apos;m <span className="wave" aria-hidden="true">👋</span></p>
           <h1>Shiv Om <span className="gradient-text">Mishra</span></h1>
           <h2 className="role-line">
-            <span className="sr-only">Software Development &amp; Technology</span>
+            <span className="sr-only">Shiv Om Mishra — Sr. Software Engineer &amp; Technical Leader</span>
             <RotatingRole />
           </h2>
           <p className="hero-description">
@@ -509,9 +509,10 @@ function HomePage() {
           <p className="section-kicker">01 / A LITTLE ABOUT ME</p>
           <h2>Turning ideas into<br /><span className="gradient-text">digital reality.</span></h2>
           <p>
-            I&apos;m Shiv Om Mishra, a Software Development &amp; Technology professional whose career has progressed
-            through web development, software engineering and senior software
-            engineering. I focus on practical e-commerce and web application work.
+            I&apos;m Shiv Om Mishra, a Sr. Software Engineer and Technical Leader.
+            My career has progressed through web development and software
+            engineering roles, and I focus on practical e-commerce and web
+            application work.
           </p>
           <p>My project experience includes Magento, Laravel, CodeIgniter and mobile application development.</p>
           <Link className="text-link" to="/about">More about me <span>→</span></Link>
@@ -578,10 +579,10 @@ function AboutPage() {
           <p className="section-kicker">MY APPROACH</p>
           <h2>Building useful things,<br /><span className="gradient-text">one detail at a time.</span></h2>
           <p>
-            I&apos;m Shiv Om Mishra, a Software Development &amp; Technology
-            professional. My career path began as a Trainee Web
-            Developer, progressing through Web Developer, Software Engineer and
-            Senior Software Engineer before my current Technical Leader role.
+            I&apos;m Shiv Om Mishra, a Sr. Software Engineer and Technical Leader.
+            My career path began as a Trainee Web Developer, progressing through
+            Web Developer and Software Engineer to Sr. Software Engineer (Senior
+            Software Engineer), and now to my current role as Technical Leader.
             My project work spans e-commerce, web platforms and mobile applications.
           </p>
           <p>
@@ -730,9 +731,69 @@ function Callout() {
   );
 }
 
+const routeSeo = {
+  "/": {
+    title: "Shiv Om Mishra — Sr. Software Engineer & Technical Leader",
+    description: "Shiv Om Mishra (Shivom Mishra) — Sr. Software Engineer and Technical Leader. Portfolio of e-commerce and web application work in Magento, Laravel, PHP and React. Phone: 8953000895.",
+  },
+  "/about": {
+    title: "About Shiv Om Mishra — Sr. Software Engineer & Technical Leader",
+    description: "Shiv Om Mishra (Shivom Mishra) is a Sr. Software Engineer and Technical Leader, with a career path from trainee web developer to senior software engineer, working across Magento, Laravel, CodeIgniter and mobile apps.",
+  },
+  "/projects": {
+    title: "Projects by Shiv Om Mishra (Shivom Mishra) — Magento, Laravel, React",
+    description: "Selected projects by Shiv Om Mishra (Shivom Mishra): e-commerce builds and web applications in Magento 2, Laravel, CodeIgniter, PHP, React.js and Flutter.",
+  },
+  "/beyond-code": {
+    title: "Beyond Code — Shiv Om Mishra (Shivom Mishra)",
+    description: "Achievements, writing and interests of Shiv Om Mishra (Shivom Mishra) beyond software development.",
+  },
+  "/contact": {
+    title: "Contact Shiv Om Mishra (Shivom Mishra) — 8953000895",
+    description: "Get in touch with Shiv Om Mishra (Shivom Mishra) for e-commerce and web application work. Phone or WhatsApp: 8953000895. Email: shivommishraa@gmail.com.",
+  },
+};
+
+function setMetaTag(attribute, key, content) {
+  let tag = document.head.querySelector(`meta[${attribute}="${key}"]`);
+  if (!tag) {
+    tag = document.createElement("meta");
+    tag.setAttribute(attribute, key);
+    document.head.appendChild(tag);
+  }
+  tag.setAttribute("content", content);
+}
+
+function usePageSeo() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    const seo = routeSeo[pathname] || routeSeo["/"];
+    document.title = seo.title;
+    setMetaTag("name", "description", seo.description);
+    setMetaTag("property", "og:title", seo.title);
+    setMetaTag("property", "og:description", seo.description);
+    setMetaTag("name", "twitter:title", seo.title);
+    setMetaTag("name", "twitter:description", seo.description);
+
+    const cleanPath = pathname !== "/" ? pathname.replace(/\/+$/, "") : "/";
+    const url = `${window.location.origin}${cleanPath}`;
+    setMetaTag("property", "og:url", url);
+
+    let canonical = document.head.querySelector('link[rel="canonical"]');
+    if (!canonical) {
+      canonical = document.createElement("link");
+      canonical.setAttribute("rel", "canonical");
+      document.head.appendChild(canonical);
+    }
+    canonical.setAttribute("href", url);
+  }, [pathname]);
+}
+
 function AnimatedRoutes() {
   const location = useLocation();
   const reduceMotion = useReducedMotion();
+  usePageSeo();
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
