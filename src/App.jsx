@@ -300,8 +300,9 @@ function AboutPage() {
           <p className="section-kicker">MY APPROACH</p>
           <h2>Building useful things,<br /><span className="gradient-text">one detail at a time.</span></h2>
           <p>
-            I&apos;m Shiv Om Mishra, a Technical Leader with a career path through
-            Web Developer, Software Engineer and Senior Software Engineer roles.
+            I&apos;m Shiv Om Mishra, and my career path began as a Trainee Web
+            Developer, progressing through Web Developer, Software Engineer and
+            Senior Software Engineer before my current Technical Leader role.
             My project work spans e-commerce, web platforms and mobile applications.
           </p>
           <p>
@@ -322,15 +323,28 @@ function AboutPage() {
         <div className="timeline">
           <div className="timeline-item">
             <span className="timeline-dot" />
-            <small>CURRENT ROLE · SEPTEMBER 2026–PRESENT</small>
-            <h3>Technical Leader</h3>
-            <p>Technical Leader since September 2026.</p>
+            <small>CAREER PATH · STEP 1</small>
+            <h3>Trainee Web Developer</h3>
           </div>
           <div className="timeline-item">
             <span className="timeline-dot" />
-            <small>PREVIOUS ROLES</small>
-            <h3>Career progression</h3>
-            <p>Web Developer → Software Engineer → Senior Software Engineer</p>
+            <small>CAREER PATH · STEP 2</small>
+            <h3>Web Developer</h3>
+          </div>
+          <div className="timeline-item">
+            <span className="timeline-dot" />
+            <small>CAREER PATH · STEP 3</small>
+            <h3>Software Engineer</h3>
+          </div>
+          <div className="timeline-item">
+            <span className="timeline-dot" />
+            <small>CAREER PATH · STEP 4</small>
+            <h3>Senior Software Engineer</h3>
+          </div>
+          <div className="timeline-item">
+            <span className="timeline-dot" />
+            <small>CURRENT ROLE · SEPTEMBER 2026–PRESENT</small>
+            <h3>Technical Leader</h3>
           </div>
         </div>
       </Reveal>
