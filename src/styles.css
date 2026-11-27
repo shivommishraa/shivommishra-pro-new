@@ -143,19 +143,25 @@ h1, h2, h3, p { margin-top: 0; }
 @keyframes blink { 50% { opacity: 0; } }
 .hero-description { max-width: 470px; margin: 25px 0; color: var(--muted); font-size: 14px; line-height: 1.8; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
-.social-links { display: flex; gap: 10px; margin-top: 30px; }
-.social-links a {
-  display: grid;
-  width: 35px;
-  height: 35px;
-  place-items: center;
+.social-links { display: flex; margin-top: 26px; }
+.hero-email-link {
+  display: inline-flex;
+  max-width: 100%;
+  min-height: 56px;
+  align-items: center;
+  gap: 11px;
+  padding: 8px 14px 8px 9px;
   border: 1px solid var(--line);
-  border-radius: 50%;
-  color: #d9e3f2;
-  font-weight: 700;
-  transition: 0.25s;
+  border-radius: 14px;
+  background: #ffffff04;
+  transition: transform 0.25s, border-color 0.25s, background 0.25s;
 }
-.social-links a:hover { transform: translateY(-4px); border-color: var(--green); color: var(--green); }
+.hero-email-link:hover { transform: translateY(-2px); border-color: #5dff7780; background: #5dff7708; }
+.hero-email-icon { display: grid; width: 36px; height: 36px; flex: 0 0 36px; place-items: center; border: 1px solid #5dff7733; border-radius: 11px; background: #5dff770d; color: var(--green); font-size: 17px; }
+.hero-email-copy { display: grid; min-width: 0; gap: 3px; }
+.hero-email-copy small { color: var(--muted); font-size: 9px; letter-spacing: 0.7px; text-transform: uppercase; }
+.hero-email-copy strong { overflow-wrap: anywhere; color: var(--text); font-size: 12px; font-weight: 600; }
+.hero-email-arrow { margin-left: 5px; color: var(--green); font-size: 14px; }
 .hero-art { position: relative; display: grid; height: 440px; place-items: center; }
 .profile-placeholder {
   position: relative;

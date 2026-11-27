@@ -230,7 +230,14 @@ function HomePage() {
             <Link className="button button-outline" to="/contact">Contact me</Link>
           </div>
           <div className="social-links">
-            <a href={`mailto:${emailAddress}`} aria-label="Email">✉</a>
+            <a className="hero-email-link" href={`mailto:${emailAddress}`}>
+              <span className="hero-email-icon" aria-hidden="true">✉</span>
+              <span className="hero-email-copy">
+                <small>Email me</small>
+                <strong>{emailAddress}</strong>
+              </span>
+              <span className="hero-email-arrow" aria-hidden="true">↗</span>
+            </a>
           </div>
         </motion.div>
         <div className="hero-art">
